@@ -12,7 +12,7 @@
 
 **🔥 A production-grade FastAPI backend with a user-friendly Gradio frontend for fashion object detection**
 
-[✨ Features](#features)  [🔌 API Endpoints](#api-endpoints) | [🤖 Model Information](#model-information) | [🚀 Quick Start](#quick-start) || [🛠️ Troubleshooting](#troubleshooting) | [💡Upcoming Features](#upcoming features)
+[✨ Features](#features)  [🔌 API Endpoints](#api-endpoints) | [🤖 Model Information](#model-information) | [🚀 Quick Start](#quick-start) || [🛠️ Troubleshooting](#troubleshooting) | [💡Upcoming Features](#upcoming-features)
 
 </div>
 
@@ -262,7 +262,7 @@ For assistance:
 - 📖 Explore the API documentation at `http://localhost:5050/api/docs`.
 - 🐛 Submit issues or questions on the project's GitHub repository.
 
-##💡Upcoming Features
+## 💡Upcoming Features
 
 _(Current features: Fashion object detection from images, videos, simple Web app)_
 
