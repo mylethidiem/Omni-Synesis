@@ -1,4 +1,4 @@
-# 🛍️ Fashion Object Detection API
+# 🛍️Power Multimodal Retrieval Information App
 
 <div align="center">
   <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" />
@@ -12,7 +12,7 @@
 
 **🔥 A production-grade FastAPI backend with a user-friendly Gradio frontend for fashion object detection**
 
-[🚀 Quick Start](#quick-start) | [✨ Features](#features) | [🔌 API Endpoints](#api-endpoints) | [🤖 Model Information](#model-information) | [🛠️ Troubleshooting](#troubleshooting)
+[✨ Features](#features)  [🔌 API Endpoints](#api-endpoints) | [🤖 Model Information](#model-information) | [🚀 Quick Start](#quick-start) || [🛠️ Troubleshooting](#troubleshooting) | [💡Upcoming Features](#upcoming features)
 
 </div>
 
@@ -20,11 +20,82 @@
 
 The Fashion Object Detection API is a robust, scalable solution that integrates a **FastAPI** backend with a **Gradio** frontend, powered by the `yainage90/fashion-object-detection` model from Hugging Face. This application delivers a secure RESTful API with automatic OpenAPI documentation and an intuitive web interface for detecting fashion items in images.
 
+## ✨ Features
+
+### Demo
+
+<video controls src="static/picture/demo.mp4" title="Title"></video>
+
+### 🧠 Core Functionality
+
+- **🤖 AI-Powered Detection**: Precise identification of fashion items using Hugging Face Transformers.
+- **📦 Batch Processing**: Supports simultaneous processing of multiple images.
+
+### 🎨 Frontend Features
+
+- **📷 Single Image Upload**: Process individual images with visualized results.
+- **📚 Batch Processing**: Handle multiple images in a single request.
+- **🎚️ Adjustable Confidence Threshold**: Customize detection sensitivity.
+- **📊 Real-Time Visualization**: Displays bounding boxes with confidence scores.
+- **🏥 Health Monitoring**: Real-time API status monitoring.
+- **🖼️ Example Images**: Pre-loaded images for quick testing.
+
+### 🔧 Technical Features
+
+- **📖 OpenAPI Documentation**: Interactive API documentation at `/api/docs`.
+- **🐳 Docker Support**: Containerized deployment for scalability.
+- **📝 Structured Logging**: Professional logging for debugging and monitoring.
+- **⚙️ Configurable Settings**: Environment-based configuration for flexibility.
+
+## 📁 Project Structure
+
+```
+fashion-detection-app/
+├── app/                    # Core application code
+│   ├── api/                # FastAPI routes and endpoints
+│   ├── core/               # Configuration and security utilities
+│   ├── models/             # Pydantic schemas for request/response validation
+│   ├── services/           # Business logic and model handling
+│   ├── utils/              # Helper functions and utilities
+│   ├── frontend/           # Gradio UI implementation
+│   └── main.py             # FastAPI application entry point
+├── requirements.txt        # Python dependencies
+├── Dockerfile              # Docker configuration
+└── README.md               # Project documentation
+```
+
+## 🔌 API Endpoints
+
+### 🔐 Check Health
+
+- **GET /api/v1/health**: Checks API health (requires authentication).
+
+### 🖼️ Detection Endpoints
+
+- **POST /api/v1/detect/image**: Detects fashion items in a single image.
+- **POST /api/v1/detect/batch**: Detects fashion items in multiple images.
+
+## 🤖 Model Information
+
+### 📚 Model Details
+
+- **Model**: [`yainage90/fashion-object-detection`](https://huggingface.co/yainage90/fashion-object-detection)
+- **Type**: Object Detection
+
+### 👗 Detection Classes
+
+The model identifies a wide range of fashion items, including:
+
+- **👕 Clothing** (e.g., dresses, shirts, pants)
+- **👜 Accessories** (e.g., bags, shoes, glasses)
+- **👠 Fashion-specific objects**
+- **👖 Various apparel categories**
+
 ## 🚀 Quick Start
 
 Follow these steps to set up and run the application locally.
 
-### ✨ My optimize
+### ✨ Check code
 For my learning AIO2025: FastAPI
 #### Refactor code
 - Using `isort`, `black`
@@ -135,77 +206,6 @@ Access the Gradio UI at: 🌐 `http://localhost:7860`
 curl -X GET "http://localhost:5050/api/v1/health" -H "X-Token: your-jwt-token"
 ```
 
-## ✨ Features
-
-### Demo
-
-<video controls src="static/picture/demo.mp4" title="Title"></video>
-
-### 🧠 Core Functionality
-
-- **🤖 AI-Powered Detection**: Precise identification of fashion items using Hugging Face Transformers.
-- **📦 Batch Processing**: Supports simultaneous processing of multiple images.
-
-### 🎨 Frontend Features
-
-- **📷 Single Image Upload**: Process individual images with visualized results.
-- **📚 Batch Processing**: Handle multiple images in a single request.
-- **🎚️ Adjustable Confidence Threshold**: Customize detection sensitivity.
-- **📊 Real-Time Visualization**: Displays bounding boxes with confidence scores.
-- **🏥 Health Monitoring**: Real-time API status monitoring.
-- **🖼️ Example Images**: Pre-loaded images for quick testing.
-
-### 🔧 Technical Features
-
-- **📖 OpenAPI Documentation**: Interactive API documentation at `/api/docs`.
-- **🐳 Docker Support**: Containerized deployment for scalability.
-- **📝 Structured Logging**: Professional logging for debugging and monitoring.
-- **⚙️ Configurable Settings**: Environment-based configuration for flexibility.
-
-## 📁 Project Structure
-
-```
-fashion-detection-app/
-├── app/                    # Core application code
-│   ├── api/                # FastAPI routes and endpoints
-│   ├── core/               # Configuration and security utilities
-│   ├── models/             # Pydantic schemas for request/response validation
-│   ├── services/           # Business logic and model handling
-│   ├── utils/              # Helper functions and utilities
-│   ├── frontend/           # Gradio UI implementation
-│   └── main.py             # FastAPI application entry point
-├── requirements.txt        # Python dependencies
-├── Dockerfile              # Docker configuration
-└── README.md               # Project documentation
-```
-
-## 🔌 API Endpoints
-
-### 🔐 Check Health
-
-- **GET /api/v1/health**: Checks API health (requires authentication).
-
-### 🖼️ Detection Endpoints
-
-- **POST /api/v1/detect/image**: Detects fashion items in a single image.
-- **POST /api/v1/detect/batch**: Detects fashion items in multiple images.
-
-## 🤖 Model Information
-
-### 📚 Model Details
-
-- **Model**: [`yainage90/fashion-object-detection`](https://huggingface.co/yainage90/fashion-object-detection)
-- **Type**: Object Detection
-
-### 👗 Detection Classes
-
-The model identifies a wide range of fashion items, including:
-
-- **👕 Clothing** (e.g., dresses, shirts, pants)
-- **👜 Accessories** (e.g., bags, shoes, glasses)
-- **👠 Fashion-specific objects**
-- **👖 Various apparel categories**
-
 ## 🛠️ Troubleshooting
 
 ### 🔍 Common Issues
@@ -262,6 +262,25 @@ For assistance:
 - 📖 Explore the API documentation at `http://localhost:5050/api/docs`.
 - 🐛 Submit issues or questions on the project's GitHub repository.
 
+##💡Upcoming Features
+
+_(Current features: Fashion object detection from images, videos, simple Web app)_
+
+- [ ] Text Retrieval
+- [ ] **Text Classification** Using KNN, KMean, Decision Tree (3.1)
+- [ ] Text Classification Using Ensemble Learning (4.1)
+- [ ] **Explain Model's Predictions** with SHAP (4.1) (For DA/DS)
+- [ ] **Detect any object** from images, videos
+- [ ] Add **RAG Chatbot** from file pdf with LangChain (1.2)
+- [ ] Try some demo with Streamlit (1.1)
+- [ ] Improve more Gradio (M4)
+- [ ] Improve more Dockerfile (M4)
+- [ ] Add DVC control (M4)
+- [ ] Text Classification Naive Bayes (2.2)
+- [ ] A smart **face recognition system** (2.1 part 1)
+- [ ] **Heart Disease Diagnosis** (3.2, 4.2)
+- [ ] Create Android app
+
 ----
 ## ℹ️ Reference:
-- https://github.com/dangnha/fashion-detection-app
+- Fashion object detection from images, videos: https://github.com/dangnha/fashion-detection-app
