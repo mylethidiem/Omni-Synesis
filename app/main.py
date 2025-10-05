@@ -1,88 +1,80 @@
-from datetime import timedelta
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 
-from app.api.routes import detection, health
 from app.core.config import settings
-from app.core.security import create_access_token
+from app.api.routes import detection, health
 from app.utils.logger import logger
+
+from datetime import timedelta
+from app.core.security import create_access_token
 
 # Create FastAPI application
 app = FastAPI(
     title=settings.APP_NAME,
-    version=settings.VERSION,
     description="A professional API for fashion object detection",
-    docs_url="/api/docs" if settings.DEBUG else None,
-    redoc_url="/api/redoc" if settings.DEBUG else None,
-    openapi_url="/api/openapi.json" if settings.DEBUG else None,
+    version=settings.VERSION,
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
+    openapi_url="/api/openapi.json"
 )
 
 access_token = create_access_token(
     data={"sub": "test_user"},
-    expires_delta=timedelta(minutes=30)
+    expires_delta=timedelta(minutes=30000)
 )
-logger.info(f"Test access token (valid for 30 minutes): {access_token}")
+print(f"Generated test token: {access_token}")
 
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    # allow_origins=settings.BACKEND_CORS_ORIGINS,
-    allow_origins=["*"], # Allows for production
+    allow_origins=["*"],  # Adjust for production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Include API routers
-app.include_router(health.router, prefix=settings.API_PREFIX, tags=["Health"])
-app.include_router(detection.router, prefix=settings.API_PREFIX, tags=["Detection"])
+app.include_router(health.router, prefix=settings.API_PREFIX)
+app.include_router(detection.router, prefix=settings.API_PREFIX)
 
 # Import and mount Gradio frontend
 try:
-    import app.frontend.gradio_ui import create_gradio_interface
+    from app.frontend.gradio_ui import create_gradio_interface
     gradio_app = create_gradio_interface()
-    app.mount("/gradio", gradio_app, name="gradio")
-    logger.info("Gradio interface mounted at /gradio")
+    app.mount("/ui", gradio_app)
 except ImportError as e:
-    logger.warning(f"Gradio interface could not be mounted: {e}")
+    logger.warning(f"Could not load Gradio frontend: {e}")
 
 # Serve static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Redirect root to API docs or Gradio interface
 @app.get("/")
 async def root():
-    """Redirect to API docs or Gradio interface."""
-    if settings.DEBUG:
-        return RedirectResponse(url="/api/docs")
-    else:
-        return RedirectResponse(url="/ui")
+    """Redirect to API documentation"""
+    return RedirectResponse(url="/api/docs")
 
-@app.get("ui-redirect")
+@app.get("/ui-redirect")
 async def ui_redirect():
-    """Redirect to Gradio interface."""
+    """Redirect to Gradio UI"""
     return RedirectResponse(url="/ui")
 
 @app.on_event("startup")
 async def startup_event():
-    # Add any startup tasks here
-    logger.info(f"Starting up the FastAPI application '{settings.APP_NAME}' v{settings.VERSION} started successfully.")
+    """Application startup events"""
+    logger.info(f"{settings.APP_NAME} v{settings.VERSION} starting up...")
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    # Add any shutdown tasks here
-    logger.info(f"Shutting down the FastAPI application '{settings.APP_NAME}'.")
+    """Application shutdown events"""
+    logger.info(f"{settings.APP_NAME} v{settings.VERSION} shutting down...")
 
-# Main entry point
 if __name__ == "__main__":
     import uvicorn
-
     uvicorn.run(
         "app.main:app",
-        host=settings.HOST
-        , port=settings.PORT,
+        host=settings.HOST,
+        port=settings.PORT,
         reload=settings.DEBUG
     )

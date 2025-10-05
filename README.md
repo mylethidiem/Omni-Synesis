@@ -243,15 +243,6 @@ docker run -p 5050:8000 fashion-detection
 docker-compose up -d
 ```
 
-## 🤝 Contributing
-
-1. 🍴 Fork the repository.
-2. 🌿 Create a feature branch (`git checkout -b feature/your-feature`).
-3. 💻 Make your changes and add tests for new functionality.
-4. ✅ Commit your changes (`git commit -m "Add your feature"`).
-5. 🔄 Push to the branch (`git push origin feature/your-feature`).
-6. 📬 Submit a pull request.
-
 ## 📜 License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
