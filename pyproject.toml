@@ -1,0 +1,16 @@
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+# known_third_party = ["numpy", "pandas", "requests"]
+
+[tool.ruff]
+line-length = 88
+select = ["E","F","I","UP","B"]  # style, bugbear, upgrade…
+
+[tool.mypy]
+python_version = "3.11"
+strict = true

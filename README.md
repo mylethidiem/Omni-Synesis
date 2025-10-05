@@ -26,7 +26,11 @@ Follow these steps to set up and run the application locally.
 
 ### ✨ My optimize
 For my learning AIO2025: FastAPI
-
+#### Refactor code
+- Using `isort`, `black`
+```bash
+pip install pytest pytest-cov black isort ruff mypy
+```
 
 ### 1. 📥 Clone the Repository
 
