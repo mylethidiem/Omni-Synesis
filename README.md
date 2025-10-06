@@ -1,6 +1,6 @@
 <div align="center">
   <h1>💡 Omni Synesis</h1>
-  <p><strong>Multimodal Retrieval & Vision App (v0: Fashion Object Detection)</strong></p>
+  <p><strong>Multimodal Retrieval & Intelligence Platform (v0: Fashion Object Detection)</strong></p>
 </div>
 
 
