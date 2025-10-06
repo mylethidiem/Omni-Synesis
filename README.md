@@ -1,4 +1,8 @@
-# 🛍️Power Multimodal Retrieval Information App
+<div align="center">
+  <h1>💡 Omni Synesis</h1>
+  <p><strong>Multimodal Retrieval & Vision Demo (v0: Fashion Object Detection)</strong></p>
+</div>
+
 
 <div align="center">
   <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" />
@@ -7,24 +11,47 @@
   <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" />
 </div>
 
-
 <div align="center">
 
-**🔥 A production-grade FastAPI backend with a user-friendly Gradio frontend for fashion object detection**
+**🔥 Production-grade FastAPI backend + friendly Gradio frontend for fashion object detection.**
 
-[✨ Features](#features)  [🔌 API Endpoints](#api-endpoints) | [🤖 Model Information](#model-information) | [🚀 Quick Start](#quick-start) || [🛠️ Troubleshooting](#troubleshooting) | [💡Upcoming Features](#upcoming-features)
+[✨ Features](#-features) • [📁 Project Structure](#-project-structure) • [🚀 Quick Start](#-quick-start) • [🔌 API Endpoints](#-api-endpoints) • [🤖 Model](#-model-information) • [🛠️ Troubleshooting](#-troubleshooting) • [🐳 Docker](#-docker-deployment) • [🗺️ Roadmap](#-roadmap)
 
 </div>
 
-## 📋 Overview
+---
 
-The Fashion Object Detection API is a robust, scalable solution that integrates a **FastAPI** backend with a **Gradio** frontend, powered by the `yainage90/fashion-object-detection` model from Hugging Face. This application delivers a secure RESTful API with automatic OpenAPI documentation and an intuitive web interface for detecting fashion items in images.
+## 📋 Overview
+**Omni Synesis** is a multi-module project aiming at **Multimodal Retrieval & Information**.  
+This initial version focuses on **Fashion Object Detection**: a **FastAPI** backend with a **Gradio** UI powered by the Hugging Face model `yainage90/fashion-object-detection`.  
+You get a secure REST API with automatic **OpenAPI docs**, structured logging, and environment-based configuration.
+
+> Other modules (Text Retrieval, Text Classification, RAG, etc.) are planned—see [🗺️ Roadmap](#-roadmap).
+
+---
 
 ## ✨ Features
 
-### Demo
+### 🎛️ Core
+- **🤖 AI detection** via Hugging Face/Transformers.
+- **📦 Batch** processing for multiple images.
+- **📖 OpenAPI** interactive docs at `/api/docs`.
+- **📝 Structured logging** for debugging/monitoring.
 
-<video controls src="static/picture/demo.mp4" title="Title"></video>
+### 🖥️ Frontend (Gradio)
+- **📷 Single** & **📚 batch** uploads.
+- **🎚️ Adjustable confidence** threshold.
+- **📊 Visualization**: bounding boxes + confidence scores.
+- **🏥 Health status**.
+- **🖼️ Example images** for quick testing.
+
+### ⚙️ Ops
+- **.env** driven config (name/port/model/threshold/token…).
+- **🐳 Dockerized** build & run.
+
+### 🎬 Demo
+
+<video controls src="static/picture/demo.mp4" title="Fashion Object Detection Demo"></video>
 
 ### 🧠 Core Functionality
 
@@ -50,7 +77,7 @@ The Fashion Object Detection API is a robust, scalable solution that integrates 
 ## 📁 Project Structure
 
 ```
-fashion-detection-app/
+omni-synesis/
 ├── app/                    # Core application code
 │   ├── api/                # FastAPI routes and endpoints
 │   ├── core/               # Configuration and security utilities
@@ -62,18 +89,17 @@ fashion-detection-app/
 ├── requirements.txt        # Python dependencies
 ├── Dockerfile              # Docker configuration
 └── README.md               # Project documentation
+
 ```
 
 ## 🔌 API Endpoints
 
-### 🔐 Check Health
+| Method | Path                   | Auth     | Description                     |
+| -----: | ---------------------- | -------- | ------------------------------- |
+|    GET | `/api/v1/health`       | X-Token  | 🔐 API health status (requires authentication).|
+|   POST | `/api/v1/detect/image` | optional | 🖼️ Detect fashion items in 1 image |
+|   POST | `/api/v1/detect/batch` | optional | 🖼️ Detect fashion items in batch   |
 
-- **GET /api/v1/health**: Checks API health (requires authentication).
-
-### 🖼️ Detection Endpoints
-
-- **POST /api/v1/detect/image**: Detects fashion items in a single image.
-- **POST /api/v1/detect/batch**: Detects fashion items in multiple images.
 
 ## 🤖 Model Information
 
@@ -107,7 +133,7 @@ pip install pytest pytest-cov black isort ruff mypy
 
 ```bash
 git clone <your-repository-url>
-cd fashion-detection-app
+cd omni-synesis
 ```
 
 ### 2. 🐍 Create a Virtual Environment
@@ -115,18 +141,15 @@ cd fashion-detection-app
 Using Conda:
 
 ```bash
-conda create -n fastobj python=3.11
-conda activate fastobj
-```
+# Conda (recommended)
+conda create -n omni python=3.11 -y
+conda activate omni
 
-Using Python's `venv`:
-
-```bash
-python -m venv venv
+# or venv
+python -m venv .venv
 # Linux/Mac:
-source venv/bin/activate
-# Windows:
-.\venv\Scripts\activate
+source .venv/bin/activate   # Windows: .\.venv\Scripts\activate
+
 ```
 
 ### 3. 📦 Install Dependencies
@@ -141,14 +164,17 @@ Create a `.env` file in the project root:
 
 ```
 # .env
-APP_NAME=Fashion Object Detection API
+APP_NAME=Omni Synesis API
 VERSION=1.0.0
 DEBUG=False
 HOST=0.0.0.0
 PORT=5050
 API_PREFIX=/api/v1
+
 MODEL_CHECKPOINT=yainage90/fashion-object-detection
 DETECTION_THRESHOLD=0.4
+
+# JWT (demo)
 SECRET_KEY=your-super-secret-key-change-in-production
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
@@ -159,6 +185,8 @@ API_TOKEN=
 
 ```bash
 uvicorn app.main:app --host 0.0.0.0 --port 5050
+# Default: http://localhost:5050
+# Docs:    http://localhost:5050/api/docs
 ```
 
 The API is accessible at: 🌐 `http://localhost:5050`
@@ -196,6 +224,7 @@ Run the Gradio frontend:
 
 ```bash
 python -m app.frontend.gradio_ui
+# Gradio: http://localhost:7860
 ```
 
 Access the Gradio UI at: 🌐 `http://localhost:7860`
@@ -224,17 +253,20 @@ curl -X GET "http://localhost:5050/api/v1/health" -H "X-Token: your-jwt-token"
 
 - **🖥️ CUDA/MPS Not Available**: The application automatically falls back to CPU if GPU/MPS is unavailable.
 - **🌐 Model Download Issues**: Verify internet connectivity and access to Hugging Face.
-- **🔐 Authentication Errors**: Ensure the JWT token is correctly set in the frontend configuration.
+- **🔐 Authentication Errors 401/403**: Ensure the JWT token is correctly set in the frontend configuration.
 
 ## 🐳 Docker Deployment
 
 ### 🏗️ Build and Run
 
 ```bash
-# Build the Docker image
-docker build -t fashion-detection .
-# Run the container
-docker run -p 5050:8000 fashion-detection
+# Build
+docker build -t omni-synesis .
+
+# Run (reads .env; maps the same port)
+docker run --env-file .env -p 5050:5050 omni-synesis
+# → API: http://localhost:5050
+
 ```
 
 ### 🐳 Docker Compose
@@ -262,20 +294,20 @@ For assistance:
 - 📖 Explore the API documentation at `http://localhost:5050/api/docs`.
 - 🐛 Submit issues or questions on the project's GitHub repository.
 
-## 💡Upcoming Features
+## 🗺️ Roadmap
 
 _(Current features: Fashion object detection from images, videos, simple Web app)_
 
 - [ ] Text Retrieval
-- [ ] **Text Classification** Using KNN, KMean, Decision Tree (3.1)
+- [ ] **Text Classification** (KNN, KMeans, Decision Tree) (3.1)
 - [ ] Text Classification Using Ensemble Learning (4.1)
-- [ ] **Explain Model's Predictions** with SHAP (4.1) (For DA/DS)
-- [ ] **Detect any object** from images, videos
-- [ ] Add **RAG Chatbot** from file pdf with LangChain (1.2)
+- [ ] **Explain Model's Predictions** for DA/DS with SHAP (4.1)
+- [ ] **Generic object detection** (images/videos)
+- [ ] Add **RAG Chatbot** (PDF) via LangChain (1.2)
 - [ ] Try some demo with Streamlit (1.1)
 - [ ] Improve more Gradio (M4)
 - [ ] Improve more Dockerfile (M4)
-- [ ] Add DVC control (M4)
+- [ ] DVC integration (M4)
 - [ ] Text Classification Naive Bayes (2.2)
 - [ ] A smart **face recognition system** (2.1 part 1)
 - [ ] **Heart Disease Diagnosis** (3.2, 4.2)
