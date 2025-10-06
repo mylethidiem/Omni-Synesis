@@ -5,6 +5,7 @@ import io
 from typing import List, Dict, Any
 from datetime import datetime
 import os
+from app.utils.logger import logger
 
 # Configuration
 API_BASE_URL = "http://localhost:5050"  # API port
@@ -16,7 +17,9 @@ API_BATCH_ENDPOINT = f"{API_BASE_URL}/api/{API_VERSION}/detect/batch"
 
 # Authentication token (in production, use proper auth flow)
 # This should match backend token
-API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0X3VzZXIiLCJleHAiOjE3NTkzMTczNzJ9.DRY_zUel3o0VhufaNKKFdZU8jdlw6O6xOaPUjFJTkCE"
+# API_TOKEN = "your jwt token"
+API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0X3VzZXIiLCJleHAiOjE3NjE1NTY0NzR9.MmTycbwyldhk6oB2P7xcwVuMj9Sf8t6JkJaSnmb9qxI"
+SHOW_GRADIO_API = False
 
 class FashionDetectionClient:
     """Client for interacting with the Fashion Detection API"""
@@ -205,6 +208,7 @@ def create_gradio_interface():
 
     def predict_single_image(image: Image.Image, threshold: float) -> tuple:
         """Predict objects in a single image"""
+        logger.info(">>> predict_single_image ping clicked")
         try:
             # Check API health first
             health_status = api_client.check_health()
@@ -230,6 +234,7 @@ def create_gradio_interface():
 
     def predict_batch_images(images: List[Image.Image], threshold: float):
         """Predict objects in multiple images and return processed images with bounding boxes"""
+        logger.info(">>> predict_batch_images ping clicked")
         try:
             if not images:
                 return [], "Please upload at least one image."
@@ -289,14 +294,15 @@ def create_gradio_interface():
                     pil_image = pil_image.convert("RGB")
                 pil_images.append(pil_image)
             except Exception as e:
-                print(f"Error converting image {file_path}: {str(e)}")
+                logger.error(f"Error converting image {file_path}: {str(e)}")
         return pil_images
 
 
     def check_api_health():
         """Check and display API health status"""
+        logger.info(">>> check_api_health ping clicked")
         health_status = api_client.check_health()
-        print(health_status)
+        logger.info(health_status)
 
         if health_status.get('success', False):
             status_emoji = "✅"
@@ -321,7 +327,7 @@ def create_gradio_interface():
 
     # Create the Gradio interface
     with gr.Blocks(
-        title="Fashion Object Detection",
+        title="Omni Synesis",
         theme=gr.themes.Soft(),
         css="""
         .gradio-container {max-width: 1200px !important}
@@ -330,7 +336,7 @@ def create_gradio_interface():
         """
     ) as demo:
 
-        gr.Markdown("# 🛍️ Fashion Object Detection")
+        gr.Markdown("# 💡 Omni Synesis")
         gr.Markdown("Upload images to detect fashion items using our AI-powered API")
 
         # API Health Section
@@ -390,9 +396,9 @@ def create_gradio_interface():
         batch_btn.click(
             fn=lambda images, threshold: predict_batch_images(convert_to_pil_images(images), threshold),
             inputs=[batch_images, batch_threshold],
-            outputs=[batch_output_images, batch_output_text]
+            outputs=[batch_output_images, batch_output_text],
+            show_api=SHOW_GRADIO_API
         )
-
         # Examples
         gr.Examples(
             examples=[
@@ -407,13 +413,15 @@ def create_gradio_interface():
         # Event handlers
         health_btn.click(
             fn=check_api_health,
-            outputs=health_output
+            outputs=health_output,
+            show_api=SHOW_GRADIO_API
         )
 
         single_btn.click(
             fn=predict_single_image,
             inputs=[single_image, threshold_slider],
-            outputs=[single_output_image, single_output_text]
+            outputs=[single_output_image, single_output_text],
+            show_api=SHOW_GRADIO_API
         )
 
     return demo
@@ -427,5 +435,6 @@ if __name__ == "__main__":
         server_name="0.0.0.0",
         server_port=7860,
         share=True,
-        debug=True
+        debug=True,
+        show_api=SHOW_GRADIO_API
     )

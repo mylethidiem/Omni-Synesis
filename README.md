@@ -13,7 +13,7 @@
 
 <div align="center">
 
-**🔥 Production-grade FastAPI backend + friendly Gradio frontend for fashion object detection.**
+<!-- **🔥 Production-grade FastAPI backend + friendly Gradio frontend for fashion object detection.** -->
 
 [✨ Features](#-features) • [📁 Project Structure](#-project-structure) • [🚀 Quick Start](#-quick-start) • [🔌 API Endpoints](#-api-endpoints) • [🤖 Model](#-model-information) • [🛠️ Troubleshooting](#-troubleshooting) • [🐳 Docker](#-docker-deployment) • [🗺️ Roadmap](#-roadmap)
 
@@ -22,8 +22,8 @@
 ---
 
 ## 📋 Overview
-**Omni Synesis** is a multi-module project aiming at **Multimodal Retrieval & Information**.  
-This initial version focuses on **Fashion Object Detection**: a **FastAPI** backend with a **Gradio** UI powered by the Hugging Face model `yainage90/fashion-object-detection`.  
+**Omni Synesis** is a multi-module project aiming at **Multimodal Retrieval & Information**.
+This initial version focuses on **Fashion Object Detection**: a **FastAPI** backend with a **Gradio** UI powered by the Hugging Face model `yainage90/fashion-object-detection`.
 You get a secure REST API with automatic **OpenAPI docs**, structured logging, and environment-based configuration.
 
 > Other modules (Text Retrieval, Text Classification, RAG, etc.) are planned—see [🗺️ Roadmap](#-roadmap).
@@ -233,6 +233,7 @@ Access the Gradio UI at: 🌐 `http://localhost:7860`
 
 ```bash
 curl -X GET "http://localhost:5050/api/v1/health" -H "X-Token: your-jwt-token"
+curl -X GET "http://localhost:5050/api/v1/health" -H "X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0X3VzZXIiLCJleHAiOjE3NjE1NDI3MjB9.8f4Omm0kBFWDUUd4SBKwYS72mHEOIgWEGRp8zwmywR0"
 ```
 
 ## 🛠️ Troubleshooting
