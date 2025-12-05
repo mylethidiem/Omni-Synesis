@@ -1,1 +1,1 @@
-# Intelligent-Retail-Decision-Making-System
+# Omni-Synesis
