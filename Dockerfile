@@ -6,6 +6,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+COPY logs ./logs
 
 EXPOSE 3000
 

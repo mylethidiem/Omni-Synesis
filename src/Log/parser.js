@@ -1,7 +1,13 @@
-// src/parser.js
 const fs = require('fs');
 
 function parseLogs(filePath) {
+  if (!fs.existsSync(filePath)) {
+    return {
+      errorCount: 0,
+      avgLatency: 0
+    };
+  }
+
   const data = fs.readFileSync(filePath, 'utf-8');
   const lines = data.split('\n');
 
@@ -24,5 +30,3 @@ function parseLogs(filePath) {
     avgLatency: latencyCount ? latencySum / latencyCount : 0
   };
 }
-
-module.exports = parseLogs;

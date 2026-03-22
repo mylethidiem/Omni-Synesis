@@ -1,1 +1,6 @@
-#log
+# sample log
+2026-03-20 INFO Player connected id=123
+2026-03-20 ERROR Matchmaking failed
+2026-03-20 INFO Latency=120ms
+2026-03-20 INFO Latency=200ms
+2026-03-20 ERROR Payment failed
