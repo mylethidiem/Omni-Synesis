@@ -1,12 +1,13 @@
-FROM node:18
+FROM node:18-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
+
+# RUN npm ci --omit=dev
 RUN npm install
 
 COPY . .
-COPY logs ./logs
 
 EXPOSE 3000
 

@@ -30,3 +30,5 @@ function parseLogs(filePath) {
     avgLatency: latencyCount ? latencySum / latencyCount : 0
   };
 }
+
+module.exports = parseLogs;
